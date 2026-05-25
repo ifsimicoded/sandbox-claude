@@ -15,7 +15,6 @@
       --sage:   #7aaa7e;
       --sand:   #e8dcc8;
       --bark:   #6b4c2a;
-      --sky:    #b8d4e8;
       --paper:  #f5f0e8;
       --ink:    #1a1a18;
     }
@@ -41,10 +40,7 @@
       z-index: 1000;
     }
 
-    .header-icon {
-      font-size: 28px;
-      line-height: 1;
-    }
+    .header-icon { font-size: 28px; line-height: 1; }
 
     .header-text h1 {
       font-family: 'Playfair Display', serif;
@@ -71,41 +67,131 @@
       border-radius: 20px;
     }
 
-    #map {
-      flex: 1;
-      width: 100%;
-    }
+    #map { flex: 1; width: 100%; }
 
-    /* Region filter bar */
-    .filter-bar {
+    /* ── Slide-out panel ── */
+    .panel {
       position: absolute;
-      top: 76px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 900;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 0 12px;
-      pointer-events: none;
+      top: 60px;
+      right: 0;
+      z-index: 950;
+      width: 230px;
+      background: var(--forest);
+      border-left: 2px solid var(--pine);
+      border-bottom: 2px solid var(--pine);
+      border-bottom-left-radius: 12px;
+      box-shadow: -4px 4px 24px rgba(0,0,0,0.35);
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .filter-btn {
-      pointer-events: all;
+    .panel.open { transform: translateX(0); }
+
+    /* Tab that sticks out to the left of the panel */
+    .panel-tab {
+      position: absolute;
+      top: 20px;
+      left: -42px;
       background: var(--forest);
+      border: 2px solid var(--pine);
+      border-right: none;
+      border-radius: 8px 0 0 8px;
+      padding: 10px 10px 10px 12px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      box-shadow: -3px 2px 12px rgba(0,0,0,0.3);
+      transition: background 0.18s;
+    }
+
+    .panel-tab:hover { background: var(--pine); }
+
+    .panel-tab-icon { font-size: 15px; line-height: 1; }
+
+    .panel-tab-label {
+      font-size: 9px;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      writing-mode: vertical-rl;
+    }
+
+    /* Panel content */
+    .panel-header {
+      background: var(--pine);
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .panel-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--sand);
+    }
+
+    .panel-subtitle {
+      font-size: 11px;
+      color: var(--sage);
+      margin-top: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    .panel-body { padding: 14px 14px 18px; }
+
+    .panel-section-label {
+      font-size: 10px;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 7px;
+      font-size: 12px;
+      color: var(--sand);
+    }
+
+    .legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 2px solid var(--sage);
+      background: var(--pine);
+      flex-shrink: 0;
+    }
+
+    .panel-divider {
+      border: none;
+      border-top: 1px solid var(--pine);
+      margin: 14px 0;
+    }
+
+    /* Filter buttons */
+    .filter-btn {
+      display: block;
+      width: 100%;
+      background: transparent;
       color: var(--sand);
       border: 1.5px solid var(--pine);
-      border-radius: 20px;
-      padding: 5px 14px;
+      border-radius: 8px;
+      padding: 7px 12px;
       font-family: 'DM Sans', sans-serif;
       font-size: 12px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.18s ease;
-      white-space: nowrap;
-      letter-spacing: 0.03em;
+      transition: all 0.16s ease;
+      text-align: left;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
     }
+
+    .filter-btn:last-child { margin-bottom: 0; }
 
     .filter-btn:hover,
     .filter-btn.active {
@@ -114,7 +200,7 @@
       border-color: var(--sage);
     }
 
-    /* Custom popup */
+    /* ── Popup ── */
     .leaflet-popup-content-wrapper {
       background: var(--paper);
       border-radius: 10px;
@@ -126,38 +212,13 @@
       max-width: 290px;
     }
 
-    .leaflet-popup-content {
-      margin: 0 !important;
-      width: auto !important;
-    }
+    .leaflet-popup-content { margin: 0 !important; width: auto !important; }
+    .leaflet-popup-tip { background: var(--paper); }
 
-    .leaflet-popup-tip {
-      background: var(--paper);
-    }
-
-    .popup-header {
-      background: var(--pine);
-      padding: 12px 16px 10px;
-    }
-
-    .popup-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
-      color: var(--sand);
-      line-height: 1.3;
-    }
-
-    .popup-region {
-      font-size: 11px;
-      color: var(--sage);
-      margin-top: 3px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .popup-body {
-      padding: 12px 16px 14px;
-    }
+    .popup-header { background: var(--pine); padding: 12px 16px 10px; }
+    .popup-name { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--sand); line-height: 1.3; }
+    .popup-region { font-size: 11px; color: var(--sage); margin-top: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .popup-body { padding: 12px 16px 14px; }
 
     .popup-row {
       display: flex;
@@ -169,13 +230,7 @@
     }
 
     .popup-row:last-child { margin-bottom: 0; }
-
-    .popup-icon {
-      flex-shrink: 0;
-      font-size: 14px;
-      margin-top: 1px;
-    }
-
+    .popup-icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
     .popup-label { font-weight: 500; color: var(--bark); margin-right: 3px; }
 
     .popup-link {
@@ -191,10 +246,9 @@
       letter-spacing: 0.03em;
       transition: background 0.15s;
     }
-
     .popup-link:hover { background: var(--forest); }
 
-    /* Custom marker */
+    /* ── Custom marker ── */
     .camp-marker {
       background: var(--pine);
       border: 2.5px solid var(--sage);
@@ -203,12 +257,7 @@
       box-shadow: 0 3px 10px rgba(0,0,0,0.4);
       transition: transform 0.15s, background 0.15s;
     }
-
-    .camp-marker:hover {
-      background: var(--sage);
-      transform: rotate(-45deg) scale(1.15);
-    }
-
+    .camp-marker:hover { background: var(--sage); transform: rotate(-45deg) scale(1.15); }
     .camp-marker-inner {
       transform: rotate(45deg);
       display: flex;
@@ -217,44 +266,6 @@
       width: 100%;
       height: 100%;
       font-size: 12px;
-      color: var(--sand);
-    }
-
-    /* Legend */
-    .legend {
-      position: absolute;
-      bottom: 30px;
-      right: 14px;
-      z-index: 900;
-      background: var(--forest);
-      border: 1.5px solid var(--pine);
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 12px;
-      color: var(--sand);
-    }
-
-    .legend-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 13px;
-      color: var(--sage);
-      margin-bottom: 8px;
-    }
-
-    .legend-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 5px;
-    }
-
-    .legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 2px solid var(--sage);
-      background: var(--pine);
-      flex-shrink: 0;
     }
 
     /* Source credit */
@@ -264,9 +275,8 @@
       left: 14px;
       z-index: 900;
       font-size: 11px;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.4);
     }
-
     .source-credit a { color: var(--sage); text-decoration: none; }
     .source-credit a:hover { text-decoration: underline; }
   </style>
@@ -284,12 +294,28 @@
 
 <div id="map"></div>
 
-<div class="filter-bar" id="filterBar"></div>
+<!-- Slide-out panel -->
+<div class="panel" id="panel">
+  <div class="panel-tab" id="panelTab" onclick="togglePanel()" title="Toggle map legend & filters">
+    <span class="panel-tab-icon">🗺️</span>
+    <span class="panel-tab-label">Legend</span>
+  </div>
 
-<div class="legend">
-  <div class="legend-title">Map Legend</div>
-  <div class="legend-row"><div class="legend-dot"></div> Campground location</div>
-  <div class="legend-row" style="color: var(--sage); font-size:11px; margin-top:4px;">Click a pin for details</div>
+  <div class="panel-header">
+    <div class="panel-title">Map Guide</div>
+    <div class="panel-subtitle">Click a pin to see details</div>
+  </div>
+
+  <div class="panel-body">
+    <div class="panel-section-label">Legend</div>
+    <div class="legend-row"><div class="legend-dot"></div> Campground location</div>
+    <div class="legend-row" style="color:var(--sage); font-size:11px;">First come, first served only</div>
+
+    <hr class="panel-divider"/>
+
+    <div class="panel-section-label">Filter by Region</div>
+    <div id="filterBar"></div>
+  </div>
 </div>
 
 <div class="source-credit">
@@ -298,231 +324,51 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
+// ── Panel toggle ──
+function togglePanel() {
+  const panel = document.getElementById('panel');
+  panel.classList.toggle('open');
+  const tab = document.getElementById('panelTab');
+  tab.title = panel.classList.contains('open') ? 'Close panel' : 'Open legend & filters';
+}
+
+// ── Campground data ──
 const campgrounds = [
-  {
-    name: "Humboldt Lagoons SP",
-    region: "Region 1: North Coast",
-    phone: "707-488-2041",
-    details: "Environmental sites. No water. Pit toilets. Tables. Fire rings.",
-    link: "https://www.parks.ca.gov/?page_id=416",
-    lat: 41.2251,
-    lng: -124.0981
-  },
-  {
-    name: "Manchester SP",
-    region: "Region 1: North Coast",
-    phone: "707-937-5804",
-    details: "10 environmental sites. 18 primitive sites. Chemical toilets. Fire grills. Campers up to 30 ft. Trailers up to 22 ft.",
-    link: "https://www.parks.ca.gov/?page_id=437",
-    lat: 38.9844,
-    lng: -123.7067
-  },
-  {
-    name: "Navarro River Redwoods SP",
-    region: "Region 1: North Coast",
-    phone: "707-895-3141",
-    details: "Paul M Dimmick: 25 developed sites. Toilets. Fire grills. Navarro Beach: 10 primitive sites. No water. Toilets.",
-    link: "https://www.parks.ca.gov/?page_id=435",
-    lat: 39.1768,
-    lng: -123.6896
-  },
-  {
-    name: "Sinkyone Wilderness SP",
-    region: "Region 1: North Coast",
-    phone: "707-986-7711",
-    details: "Developed and primitive hike-in sites. Pit toilets. No water.",
-    link: "https://www.parks.ca.gov/?page_id=429",
-    lat: 39.9203,
-    lng: -123.9397
-  },
-  {
-    name: "Westport-Union Landing SB",
-    region: "Region 1: North Coast",
-    phone: "707-937-5804",
-    details: "65 primitive sites. Chemical toilets. Fire rings. Tables.",
-    link: "https://www.parks.ca.gov/?page_id=440",
-    lat: 39.6771,
-    lng: -123.7912
-  },
-  {
-    name: "Ahjumawi Lava Springs SP",
-    region: "Region 2: Shasta Cascade",
-    phone: "530-335-2777",
-    details: "Environmental boat-in sites only. No land access.",
-    link: "https://www.parks.ca.gov/?page_id=464",
-    lat: 41.1250,
-    lng: -121.4373
-  },
-  {
-    name: "Auburn SRA",
-    region: "Region 3: Gold Country",
-    phone: "530-885-4527",
-    details: "100 primitive sites. Tables. No drinking water.",
-    link: "https://www.parks.ca.gov/?page_id=502",
-    lat: 38.9489,
-    lng: -120.9951
-  },
-  {
-    name: "Carnegie SVRA",
-    region: "Region 5: SF Bay Area",
-    phone: "925-447-9027",
-    details: "50 primitive sites. Flush toilets. Tables.",
-    link: "https://www.parks.ca.gov/?page_id=410",
-    lat: 37.6341,
-    lng: -121.5445
-  },
-  {
-    name: "Castle Rock SP",
-    region: "Region 5: SF Bay Area",
-    phone: "408-867-2952",
-    details: "23 primitive hike-in sites. No drinking water.",
-    link: "https://www.parks.ca.gov/?page_id=538",
-    lat: 37.2298,
-    lng: -122.1252
-  },
-  {
-    name: "Forest of Nisene Marks SP",
-    region: "Region 5: SF Bay Area",
-    phone: "831-763-7062",
-    details: "Environmental sites. Up to 6 mile hike to some. No water.",
-    link: "https://www.parks.ca.gov/?page_id=666",
-    lat: 37.0329,
-    lng: -121.8925
-  },
-  {
-    name: "Mount Tamalpais SP",
-    region: "Region 5: SF Bay Area",
-    phone: "415-388-2070",
-    details: "Developed, environmental, and hike & bike sites. Flush toilets. Tables.",
-    link: "https://www.parks.ca.gov/?page_id=471",
-    lat: 37.8890,
-    lng: -122.6108
-  },
-  {
-    name: "Andrew Molera SP",
-    region: "Region 6: Central Coast",
-    phone: "831-667-2315",
-    details: "Primitive hike-in (1/3 mile) sites. Flush toilets. Tables.",
-    link: "https://www.parks.ca.gov/?page_id=582",
-    lat: 36.2884,
-    lng: -121.8443
-  },
-  {
-    name: "Hollister Hills SVRA",
-    region: "Region 6: Central Coast",
-    phone: "831-637-3874",
-    details: "125 primitive sites. Water, showers at one campground.",
-    link: "https://www.parks.ca.gov/?page_id=404",
-    lat: 36.7868,
-    lng: -121.4197
-  },
-  {
-    name: "George J. Hatfield SRA",
-    region: "Region 7: Central Valley",
-    phone: "209-632-1852",
-    details: "21 developed sites. 1 group site. Tables. Campers up to 32 ft. Trailers up to 31 ft.",
-    link: "https://www.parks.ca.gov/?page_id=556",
-    lat: 37.3562,
-    lng: -120.9593
-  },
-  {
-    name: "Hungry Valley SVRA",
-    region: "Region 8: Los Angeles County",
-    phone: "661-248-7007",
-    details: "Primitive sites. Tables. Flush toilets. No drinking water.",
-    link: "https://www.parks.ca.gov/?page_id=405",
-    lat: 34.7917,
-    lng: -118.8716
-  },
-  {
-    name: "Saddleback Butte SP",
-    region: "Region 8: Los Angeles County",
-    phone: "661-942-0662",
-    details: "50 primitive sites. Flush toilets. Tables. Campers up to 30 ft. Trailers up to 30 ft.",
-    link: "https://www.parks.ca.gov/?page_id=618",
-    lat: 34.6898,
-    lng: -117.8250
-  },
-  {
-    name: "Topanga SP",
-    region: "Region 8: Los Angeles County",
-    phone: "310-455-2465",
-    details: "8 hike & bike sites. Pit toilets. Water.",
-    link: "https://www.parks.ca.gov/?page_id=629",
-    lat: 34.0930,
-    lng: -118.5873
-  },
-  {
-    name: "Ocotillo Wells SVRA",
-    region: "Region 12: Deserts",
-    phone: "760-767-5391",
-    details: "Primitive sites. No drinking water. No limit on camper/trailer size.",
-    link: "https://www.parks.ca.gov/?page_id=407",
-    lat: 33.1559,
-    lng: -116.1676
-  },
-  {
-    name: "Picacho SRA",
-    region: "Region 12: Deserts",
-    phone: "760-996-2963",
-    details: "59 primitive sites. Showers. Flush toilets. Campers up to 35 ft. Trailers up to 30 ft.",
-    link: "https://www.parks.ca.gov/?page_id=641",
-    lat: 33.0080,
-    lng: -114.6200
-  },
-  {
-    name: "Red Rock Canyon SP",
-    region: "Region 12: Deserts",
-    phone: "661-942-0662",
-    details: "50 primitive sites. Campers & trailers to 30 ft. No shower.",
-    link: "https://www.parks.ca.gov/?page_id=631",
-    lat: 35.3844,
-    lng: -117.9623
-  }
+  { name: "Humboldt Lagoons SP", region: "Region 1: North Coast", phone: "707-488-2041", details: "Environmental sites. No water. Pit toilets. Tables. Fire rings.", link: "https://www.parks.ca.gov/?page_id=416", lat: 41.2251, lng: -124.0981 },
+  { name: "Manchester SP", region: "Region 1: North Coast", phone: "707-937-5804", details: "10 environmental sites. 18 primitive sites. Chemical toilets. Fire grills. Campers up to 30 ft. Trailers up to 22 ft.", link: "https://www.parks.ca.gov/?page_id=437", lat: 38.9844, lng: -123.7067 },
+  { name: "Navarro River Redwoods SP", region: "Region 1: North Coast", phone: "707-895-3141", details: "Paul M Dimmick: 25 developed sites. Toilets. Fire grills. Navarro Beach: 10 primitive sites. No water. Toilets.", link: "https://www.parks.ca.gov/?page_id=435", lat: 39.1768, lng: -123.6896 },
+  { name: "Sinkyone Wilderness SP", region: "Region 1: North Coast", phone: "707-986-7711", details: "Developed and primitive hike-in sites. Pit toilets. No water.", link: "https://www.parks.ca.gov/?page_id=429", lat: 39.9203, lng: -123.9397 },
+  { name: "Westport-Union Landing SB", region: "Region 1: North Coast", phone: "707-937-5804", details: "65 primitive sites. Chemical toilets. Fire rings. Tables.", link: "https://www.parks.ca.gov/?page_id=440", lat: 39.6771, lng: -123.7912 },
+  { name: "Ahjumawi Lava Springs SP", region: "Region 2: Shasta Cascade", phone: "530-335-2777", details: "Environmental boat-in sites only. No land access.", link: "https://www.parks.ca.gov/?page_id=464", lat: 41.1250, lng: -121.4373 },
+  { name: "Auburn SRA", region: "Region 3: Gold Country", phone: "530-885-4527", details: "100 primitive sites. Tables. No drinking water.", link: "https://www.parks.ca.gov/?page_id=502", lat: 38.9489, lng: -120.9951 },
+  { name: "Carnegie SVRA", region: "Region 5: SF Bay Area", phone: "925-447-9027", details: "50 primitive sites. Flush toilets. Tables.", link: "https://www.parks.ca.gov/?page_id=410", lat: 37.6341, lng: -121.5445 },
+  { name: "Castle Rock SP", region: "Region 5: SF Bay Area", phone: "408-867-2952", details: "23 primitive hike-in sites. No drinking water.", link: "https://www.parks.ca.gov/?page_id=538", lat: 37.2298, lng: -122.1252 },
+  { name: "Forest of Nisene Marks SP", region: "Region 5: SF Bay Area", phone: "831-763-7062", details: "Environmental sites. Up to 6 mile hike to some. No water.", link: "https://www.parks.ca.gov/?page_id=666", lat: 37.0329, lng: -121.8925 },
+  { name: "Mount Tamalpais SP", region: "Region 5: SF Bay Area", phone: "415-388-2070", details: "Developed, environmental, and hike & bike sites. Flush toilets. Tables.", link: "https://www.parks.ca.gov/?page_id=471", lat: 37.8890, lng: -122.6108 },
+  { name: "Andrew Molera SP", region: "Region 6: Central Coast", phone: "831-667-2315", details: "Primitive hike-in (1/3 mile) sites. Flush toilets. Tables.", link: "https://www.parks.ca.gov/?page_id=582", lat: 36.2884, lng: -121.8443 },
+  { name: "Hollister Hills SVRA", region: "Region 6: Central Coast", phone: "831-637-3874", details: "125 primitive sites. Water, showers at one campground.", link: "https://www.parks.ca.gov/?page_id=404", lat: 36.7868, lng: -121.4197 },
+  { name: "George J. Hatfield SRA", region: "Region 7: Central Valley", phone: "209-632-1852", details: "21 developed sites. 1 group site. Tables. Campers up to 32 ft. Trailers up to 31 ft.", link: "https://www.parks.ca.gov/?page_id=556", lat: 37.3562, lng: -120.9593 },
+  { name: "Hungry Valley SVRA", region: "Region 8: Los Angeles County", phone: "661-248-7007", details: "Primitive sites. Tables. Flush toilets. No drinking water.", link: "https://www.parks.ca.gov/?page_id=405", lat: 34.7917, lng: -118.8716 },
+  { name: "Saddleback Butte SP", region: "Region 8: Los Angeles County", phone: "661-942-0662", details: "50 primitive sites. Flush toilets. Tables. Campers up to 30 ft. Trailers up to 30 ft.", link: "https://www.parks.ca.gov/?page_id=618", lat: 34.6898, lng: -117.8250 },
+  { name: "Topanga SP", region: "Region 8: Los Angeles County", phone: "310-455-2465", details: "8 hike & bike sites. Pit toilets. Water.", link: "https://www.parks.ca.gov/?page_id=629", lat: 34.0930, lng: -118.5873 },
+  { name: "Ocotillo Wells SVRA", region: "Region 12: Deserts", phone: "760-767-5391", details: "Primitive sites. No drinking water. No limit on camper/trailer size.", link: "https://www.parks.ca.gov/?page_id=407", lat: 33.1559, lng: -116.1676 },
+  { name: "Picacho SRA", region: "Region 12: Deserts", phone: "760-996-2963", details: "59 primitive sites. Showers. Flush toilets. Campers up to 35 ft. Trailers up to 30 ft.", link: "https://www.parks.ca.gov/?page_id=641", lat: 33.0080, lng: -114.6200 },
+  { name: "Red Rock Canyon SP", region: "Region 12: Deserts", phone: "661-942-0662", details: "50 primitive sites. Campers & trailers to 30 ft. No shower.", link: "https://www.parks.ca.gov/?page_id=631", lat: 35.3844, lng: -117.9623 }
 ];
 
-// Map init
-const map = L.map('map', {
-  center: [37.5, -119.5],
-  zoom: 6,
-  zoomControl: true
-});
+// ── Map init ──
+const map = L.map('map', { center: [37.5, -119.5], zoom: 6, zoomControl: true });
 
-// Try OpenStreetMap tiles (most universally supported)
-const osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   maxZoom: 19
-});
-
-// Fallback: ESRI World Topo
-const esriLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-  attribution: '&copy; <a href="https://www.esri.com/">Esri</a>',
-  maxZoom: 19
-});
-
-osmLayer.addTo(map);
-
-// If OSM tiles fail, switch to ESRI
-osmLayer.on('tileerror', function() {
-  if (!map.hasLayer(esriLayer)) {
-    map.removeLayer(osmLayer);
-    esriLayer.addTo(map);
-  }
-});
-
-// Layer switcher
-L.control.layers({
-  'OpenStreetMap': osmLayer,
-  'ESRI Topo': esriLayer
 }).addTo(map);
 
-// Custom marker icon factory
+// ── Marker & popup ──
 function makeIcon() {
   return L.divIcon({
     className: '',
-    html: `<div class="camp-marker" style="width:28px;height:28px;">
-             <div class="camp-marker-inner">⛺</div>
-           </div>`,
+    html: `<div class="camp-marker" style="width:28px;height:28px;"><div class="camp-marker-inner">⛺</div></div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 28],
     popupAnchor: [0, -32]
@@ -536,33 +382,12 @@ function makePopup(c) {
       <div class="popup-region">${c.region}</div>
     </div>
     <div class="popup-body">
-      <div class="popup-row">
-        <span class="popup-icon">📞</span>
-        <span><span class="popup-label">Phone:</span>${c.phone}</span>
-      </div>
-      <div class="popup-row">
-        <span class="popup-icon">🏕️</span>
-        <span>${c.details}</span>
-      </div>
+      <div class="popup-row"><span class="popup-icon">📞</span><span><span class="popup-label">Phone:</span>${c.phone}</span></div>
+      <div class="popup-row"><span class="popup-icon">🏕️</span><span>${c.details}</span></div>
       <a class="popup-link" href="${c.link}" target="_blank">View on parks.ca.gov ↗</a>
-    </div>
-  `;
+    </div>`;
 }
 
-// Region colors for filter buttons
-const regions = [...new Set(campgrounds.map(c => c.region))];
-const regionColors = {
-  'Region 1: North Coast': '#4a8f6f',
-  'Region 2: Shasta Cascade': '#7a6fa8',
-  'Region 3: Gold Country': '#c09a3a',
-  'Region 5: SF Bay Area': '#4a7fa8',
-  'Region 6: Central Coast': '#6faa8a',
-  'Region 7: Central Valley': '#a87a4a',
-  'Region 8: Los Angeles County': '#a84a4a',
-  'Region 12: Deserts': '#c07a3a',
-};
-
-// Markers
 const markers = campgrounds.map(c => {
   const marker = L.marker([c.lat, c.lng], { icon: makeIcon() });
   marker.bindPopup(makePopup(c), { maxWidth: 290 });
@@ -571,8 +396,9 @@ const markers = campgrounds.map(c => {
   return marker;
 });
 
-// Filter bar
+// ── Filter buttons (inside panel) ──
 const filterBar = document.getElementById('filterBar');
+const regions = [...new Set(campgrounds.map(c => c.region))];
 
 const allBtn = document.createElement('button');
 allBtn.className = 'filter-btn active';
@@ -581,6 +407,7 @@ allBtn.onclick = () => {
   markers.forEach(m => m.addTo(map));
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   allBtn.classList.add('active');
+  map.flyTo([37.5, -119.5], 6, { duration: 1 });
 };
 filterBar.appendChild(allBtn);
 
@@ -592,20 +419,12 @@ regions.forEach(region => {
   btn.onclick = () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    markers.forEach(m => {
-      if (m.campRegion === region) {
-        m.addTo(map);
-      } else {
-        m.remove();
-      }
-    });
-    // Fly to filtered markers
+    markers.forEach(m => m.campRegion === region ? m.addTo(map) : m.remove());
     const visible = markers.filter(m => m.campRegion === region);
     if (visible.length === 1) {
-      map.flyTo([visible[0].getLatLng().lat, visible[0].getLatLng().lng], 10, { duration: 1 });
+      map.flyTo(visible[0].getLatLng(), 10, { duration: 1 });
     } else {
-      const group = L.featureGroup(visible);
-      map.flyToBounds(group.getBounds().pad(0.3), { duration: 1 });
+      map.flyToBounds(L.featureGroup(visible).getBounds().pad(0.3), { duration: 1 });
     }
   };
   filterBar.appendChild(btn);
